@@ -18,6 +18,7 @@ def tweet_list(request):
     return render(request, 'tweet_list.html', {'tweets': tweets})
 
 
+# Create your new tweet
 def tweet_create(request):
     if request.method == 'POST':
         form = TweetForm(request.POST, request.FILES)
@@ -31,6 +32,7 @@ def tweet_create(request):
     return render(request, 'tweet_form.html', {'form': form})
 
 
+# Edit your existing tweet
 def tweet_edit(request, tweet_id):
     tweet = get_object_or_404(Tweet, pk=tweet_id , user=request.user)
     if request.method == 'POST':
@@ -43,3 +45,12 @@ def tweet_edit(request, tweet_id):
     else:
         form = TweetForm(instance=tweet)
     return render(request, 'tweet_form.html', {'form': form})
+
+
+# Delete your existing tweet
+def tweet_delete(request, tweet_id):
+    tweet = get_object_or_404(Tweet, pk=tweet_id , user=request.user)
+    if request.method == 'POST':
+        tweet.delete()
+    return redirect('tweet_list')
+    render(request, 'tweet_confirm_delete.html', {'tweet': tweet})
