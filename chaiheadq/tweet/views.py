@@ -3,7 +3,7 @@ from django.shortcuts import render
 # pyrefly: ignore [missing-import]
 from .models import Tweet
 # pyrefly: ignore [missing-import]
-from .forms import TweetForm
+from .forms import TweetForm, UserRegistrationForm
 from django.shortcuts import get_object_or_404 , redirect
 from django.contrib.auth.decorators import login_required
 # Create your views here. 
@@ -67,4 +67,4 @@ def register(request):
             return redirect('tweet_list')
     else:
         form = UserRegistrationForm()
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'registration/register.html', {'form': form})
