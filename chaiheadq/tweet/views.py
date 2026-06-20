@@ -1,4 +1,4 @@
-import pickle
+
 from django.shortcuts import render
 # pyrefly: ignore [missing-import]
 from .models import Tweet
@@ -58,3 +58,13 @@ def tweet_delete(request, tweet_id):
         tweet.delete()
         return redirect('tweet_list')
     return render(request, 'tweet_confirm_delete.html', {'tweet': tweet})
+
+def register(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('tweet_list')
+    else:
+        form = UserRegistrationForm()
+    return render(request, 'register.html', {'form': form})
