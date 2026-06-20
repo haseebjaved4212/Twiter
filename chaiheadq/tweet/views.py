@@ -1,4 +1,5 @@
 
+from django.contrib.auth import login
 from django.shortcuts import render
 # pyrefly: ignore [missing-import]
 from .models import Tweet
@@ -63,7 +64,10 @@ def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            user.set_password(form.cleaned_data['password1'])
+            user.save()
+            login(request, user)
             return redirect('tweet_list')
     else:
         form = UserRegistrationForm()
