@@ -3,4 +3,15 @@
 
 {%block content%}
     <h1 class="mt-5">Welcome to Django Project </h1>
+
+    <h2>
+        {% if  form.instence.pk %}Edit Tweet{%else%} Create New Tweet{%endif%}
+    </h2>
+    <form method="post" enctype="multipart/form-data" class="form">
+        {%csrf_token%}
+        {{form.as_p}}
+            <button class=" btn btn-warning" type="submit">Submit</button>
+    </form>
+    
+<a href="{%url 'tweet_list'%}" class="btn btn-secondary mt-2">Cancel</a>
 {%endblock%}
