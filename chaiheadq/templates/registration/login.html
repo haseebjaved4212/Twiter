@@ -1,1 +1,12 @@
-test login 
+{% extends 'layout.html' %}
+
+
+{% blocck content %}
+    <h2>Login</h2>
+    <form method="post" >
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+    <p>Don't have an account? <a href="{% url 'register' %}">Register Here</a></p>
+{% endblocck %}
