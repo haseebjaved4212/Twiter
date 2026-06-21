@@ -15,7 +15,11 @@ def index(request):
 
 
 def tweet_list(request):
-    tweets = Tweet.objects.all().order_by('-created_at')
+    query = request.GET.get('q')
+    if query:
+        tweets = Tweet.objects.filter(text__icontains=query).order_by('-created_at')
+    else:
+        tweets = Tweet.objects.all().order_by('-created_at')
     
     return render(request, 'tweet_list.html', {'tweets': tweets})
 
