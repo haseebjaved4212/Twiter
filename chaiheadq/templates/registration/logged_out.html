@@ -1,8 +1,14 @@
 {% extends 'layout.html' %}
 
+{% block title %}Logged Out - Little Tweeter{% endblock %}
 
-{% blocck content %}
-    <h2>Logged Out</h2>
-    
-    <p>You have been logged out  <a href="{% url 'login' %}">Login Here</a></p>
-{% endblocck %}
+{% block content %}
+<div class="feed-container py-5 text-center">
+    <div class="glass-panel p-5 mt-4">
+        <h2 class="mb-4 text-gradient">You've Been Logged Out</h2>
+        <p class="text-secondary mb-5 fs-5">Thank you for using Little Tweeter. See you next time!</p>
+        
+        <a href="{% url 'login' %}" class="btn btn-gradient px-5 py-2">Login Again</a>
+    </div>
+</div>
+{% endblock %}

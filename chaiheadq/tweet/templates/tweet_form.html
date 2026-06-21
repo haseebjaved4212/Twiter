@@ -1,17 +1,66 @@
 {% extends 'layout.html' %}
-{% block title %}Little Tweeter{% endblock %}
+{% block title %}
+    {% if form.instance.pk %}Edit Tweet{% else %}Create Tweet{% endif %} - Little Tweeter
+{% endblock %}
 
-{%block content%}
-    <h1 class="mt-5">Welcome to Django Project </h1>
+{% block content %}
+<div class="feed-container py-5">
+    <div class="glass-panel p-5">
+        <h2 class="mb-4 text-gradient">
+            {% if form.instance.pk %}Edit Tweet{% else %}Create New Tweet{% endif %}
+        </h2>
+        
+        <form method="post" enctype="multipart/form-data" class="form">
+            {% csrf_token %}
+            
+            <!-- Render form fields individually to apply glass-input class -->
+            {% for field in form %}
+                <div class="mb-4">
+                    <label class="form-label text-secondary" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    <div class="form-control-wrap">
+                        {{ field }}
+                    </div>
+                    {% if field.help_text %}
+                        <div class="form-text text-secondary mt-1"><small>{{ field.help_text }}</small></div>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <div class="text-danger mt-1"><small>{{ error }}</small></div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
 
-    <h2>
-        {% if  form.instence.pk %}Edit Tweet{%else%} Create New Tweet{%endif%}
-    </h2>
-    <form method="post" enctype="multipart/form-data" class="form">
-        {%csrf_token%}
-        {{form.as_p}}
-            <button class=" btn btn-warning" type="submit">Submit</button>
-    </form>
+            <div class="d-flex gap-3 mt-5">
+                <button class="btn btn-gradient px-5" type="submit">
+                    {% if form.instance.pk %}Save Changes{% else %}Post Tweet{% endif %}
+                </button>
+                <a href="{% url 'tweet_list' %}" class="btn btn-glass px-4">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Add some script/css directly to ensure the auto-generated django form inputs get the glass style -->
+<style>
+    .form-control-wrap input, 
+    .form-control-wrap textarea, 
+    .form-control-wrap select {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--glass-border);
+        color: var(--text-primary);
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        transition: var(--transition);
+        font-family: inherit;
+    }
     
-<a href="{%url 'tweet_list'%}" class="btn btn-secondary mt-2">Cancel</a>
-{%endblock%}
+    .form-control-wrap input:focus, 
+    .form-control-wrap textarea:focus, 
+    .form-control-wrap select:focus {
+        outline: none;
+        background: rgba(255, 255, 255, 0.08);
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 4px rgba(0, 242, 254, 0.15);
+    }
+</style>
+{% endblock %}

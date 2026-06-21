@@ -1,26 +1,43 @@
 {% extends 'layout.html' %}
-{% block title %}Little Tweeter{% endblock %}
+{% block title %}Feed - Little Tweeter{% endblock %}
 
-{%block content%}
-    <h1 class="">Welcome to Django Project </h1>
-    <a href="{%url 'tweet_create'%}" class="btn btn-primary mb-2">Create A Tweet</a>
+{% block content %}
+<div class="feed-container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h1 class="h3 mb-0 font-weight-bold">Your Feed</h1>
+        <a href="{% url 'tweet_create' %}" class="btn btn-gradient">Create Tweet</a>
+    </div>
 
-   <div class="container row mt-5 gap=3">
-  {%for tweet in tweets%}
-  <div class="card" style="width: 18rem;">
-  <img src="{{tweet.photo.url}}" class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">{{tweet.user.username}}</h5>
-    <p class="card-text">{{tweet.text}}</p>
+    {% if tweets %}
+        <div class="d-flex flex-column gap-4">
+            {% for tweet in tweets %}
+                <div class="glass-panel tweet-card">
+                    {% if tweet.photo %}
+                        <img src="{{ tweet.photo.url }}" class="card-img-top img-fluid w-100" alt="Tweet image">
+                    {% endif %}
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="card-title text-gradient m-0">@{{ tweet.user.username }}</h5>
+                            <small class="text-secondary">{{ tweet.created_at|timesince }} ago</small>
+                        </div>
+                        <p class="card-text mb-4">{{ tweet.text }}</p>
 
-    {% if tweet.user == user %}
-    <a href="{%url 'tweet_edit' tweet.id%}" class="btn btn-primary">Edit</a>
-    <a href="{%url 'tweet_delete' tweet.id%}" class="btn btn-danger">Delete</a>
-
+                        {% if tweet.user == user %}
+                            <div class="d-flex gap-2">
+                                <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-glass btn-sm">Edit</a>
+                                <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-glass btn-sm text-danger border-danger">Delete</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center py-5 glass-panel">
+            <h4 class="text-secondary">No tweets found.</h4>
+            <p class="text-secondary mb-4">Be the first to share something!</p>
+            <a href="{% url 'tweet_create' %}" class="btn btn-gradient">Create a Tweet</a>
+        </div>
     {% endif %}
-  </div>
 </div>
-  {%endfor%}
-   </div>
-    
-{%endblock%}
+{% endblock %}

@@ -1,12 +1,51 @@
 {% extends 'layout.html' %}
 
+{% block title %}Login - Little Tweeter{% endblock %}
 
 {% block content %}
-    <h2>Login</h2>
-    <form method="post" >
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Login</button>
-    </form>
-    <p>Don't have an account? <a href="{% url 'register' %}">Register Here</a></p>
+<div class="feed-container py-5">
+    <div class="glass-panel p-5 text-center mt-4">
+        <h2 class="mb-4 text-gradient">Welcome Back</h2>
+        
+        <form method="post" class="form text-start mb-4">
+            {% csrf_token %}
+            
+            {% for field in form %}
+                <div class="mb-4">
+                    <label class="form-label text-secondary" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    <div class="form-control-wrap">
+                        {{ field }}
+                    </div>
+                    {% for error in field.errors %}
+                        <div class="text-danger mt-1"><small>{{ error }}</small></div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            
+            <button type="submit" class="btn btn-gradient w-100 py-2 mt-2">Login to Continue</button>
+        </form>
+        
+        <p class="text-secondary mt-4">Don't have an account? <a href="{% url 'register' %}" class="text-gradient fw-bold text-decoration-none">Register Here</a></p>
+    </div>
+</div>
+
+<style>
+    .form-control-wrap input {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--glass-border);
+        color: var(--text-primary);
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        transition: var(--transition);
+        font-family: inherit;
+    }
+    
+    .form-control-wrap input:focus {
+        outline: none;
+        background: rgba(255, 255, 255, 0.08);
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 4px rgba(0, 242, 254, 0.15);
+    }
+</style>
 {% endblock %}
