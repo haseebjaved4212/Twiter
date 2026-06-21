@@ -11,7 +11,8 @@ class TweetForm(forms.ModelForm):
 
 class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField()
+    # password2 = forms.CharField(widget=forms.PasswordInput, label='Confirm Password')
     
     class Meta:
         model = User
-        fields = ('username', 'email', 'password', 'password2')
+        fields = ('username', 'email', 'password')
