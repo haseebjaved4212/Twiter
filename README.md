@@ -2,6 +2,14 @@
 
 A Twitter-like social media web application built with Django. This application allows users to register, login, and interact with the platform by posting tweets, uploading photos, and searching through tweets.
 
+## Screenshots
+
+![Desktop View](Assets/desktop-view.png)
+
+![Tablet View](Assets/Tablet-view.png)
+
+![Mobile View](Assets/Mobile-view.png)
+
 ## Features
 
 *   **User Authentication**: Secure user registration, login, and logout functionality.
