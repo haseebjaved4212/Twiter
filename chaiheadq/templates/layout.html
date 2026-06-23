@@ -33,20 +33,20 @@
                     </li>
                 </ul>
                 
-                <form class="d-flex me-3" role="search" method="GET" action="{% url 'tweet_list' %}">
-                    <input class="form-control glass-input me-2" type="search" placeholder="Search tweets..." aria-label="Search" name="q" value="{{ request.GET.q|default:'' }}">
+                <form class="d-flex flex-column flex-lg-row me-lg-3 mb-3 mb-lg-0" role="search" method="GET" action="{% url 'tweet_list' %}">
+                    <input class="form-control glass-input mb-2 mb-lg-0 me-lg-2" type="search" placeholder="Search tweets..." aria-label="Search" name="q" value="{{ request.GET.q|default:'' }}">
                     <button class="btn btn-glass" type="submit">Search</button>
                 </form>
 
-                <div class="d-flex align-items-center gap-2">
+                <div class="d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-2">
                     {% if user.is_authenticated %}
-                        <form method="post" action="{% url 'logout' %}" class="m-0">
+                        <form method="post" action="{% url 'logout' %}" class="m-0 d-flex flex-column flex-lg-row">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-glass">Logout ({{ user.username }})</button>
+                            <button type="submit" class="btn btn-glass w-100">Logout ({{ user.username }})</button>
                         </form>
                     {% else %}
-                        <a href="{% url 'login' %}" class="btn btn-glass">Login</a>
-                        <a href="{% url 'register' %}" class="btn btn-gradient">Register</a>
+                        <a href="{% url 'login' %}" class="btn btn-glass text-center">Login</a>
+                        <a href="{% url 'register' %}" class="btn btn-gradient text-center">Register</a>
                     {% endif %}
                 </div>
             </div>
